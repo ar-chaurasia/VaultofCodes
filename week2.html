@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Internship Courses</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+      gap: 20px;
+      justify-items: center;
+    }
+
+    .card {
+      background: #fff;
+      width: 280px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.2s;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: red;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .card img {
+      width: 100%;
+      height: 160px;
+      object-fit: contain;
+      background: #f5f5f5; /* Optional: adds a background if image doesn't fill the area */
+    }
+
+    .content {
+      padding: 15px;
+    }
+
+    .title {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .desc {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .details {
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    .price del {
+      color: gray;
+      margin-left: 8px;
+    }
+
+    .off {
+      color: red;
+      font-weight: bold;
+      font-size: 13px;
+      margin-left: 6px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 8px 14px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .likes {
+      float: right;
+      font-size: 14px;
+      color: #e74c3c;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Card 1 -->
+  <div class="card">
+    <div class="badge">LIVE COURSE</div>
+    <img src="1.png" alt="CareerX">
+    <div class="content">
+      <div class="title">CareerX: All-in-One Training/Prep 2025</div>
+      <div class="desc">Java, HTML, CSS, Python | Ultimate Internship Prep</div>
+      <div class="details">Flexible 3-5 hrs/week | 2 Certificates</div>
+      <div class="price">₹1,800 <del>₹3,500</del> <span class="off">48.57% OFF</span></div>
+      <a href="https://web.classplusapp.com/store/course/649395?section=overview" class="button" target="_blank">Register Now</a>
+      <span class="likes">43 Likes</span>
+    </div>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="card">
+    <div class="badge">LIVE COURSE</div>
+    <img src="2.png" alt="Web Dev">
+    <div class="content">
+      <div class="title">संकल्प Web Development Batch 2025</div>
+      <div class="desc">HTML, CSS, JS | Free Study Material</div>
+      <div class="details">Flexible 3-5 hrs/week | 2 Certificates</div>
+      <div class="price">₹499 <del>₹999</del> <span class="off">50.05% OFF</span></div>
+      <a href="https://web.classplusapp.com/store/course/506813?section=overview" class="button" target="_blank">Register Now</a>
+      <span class="likes">948 Likes</span>
+    </div>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="card">
+    <div class="badge">LIVE COURSE</div>
+    <img src="3.png" alt="Python">
+    <div class="content">
+      <div class="title">Python Programming अभ्यास Batch 2025</div>
+      <div class="desc">Python Mastery | Live + Recorded Lectures</div>
+      <div class="details">Flexible 3-5 hrs/week | 2 Certificates</div>
+      <div class="price">₹499 <del>₹999</del> <span class="off">50.05% OFF</span></div>
+      <a href="https://web.classplusapp.com/store/course/506722?section=overview" class="button" target="_blank">Register Now</a>
+      <span class="likes">530 Likes</span>
+    </div>
+  </div>
+
+  <!-- Card 4 -->
+  <div class="card">
+    <div class="badge">LIVE COURSE</div>
+    <img src="4.png" alt="AI Prompt">
+    <div class="content">
+      <div class="title">AI & Prompt Engineering चेतना Batch 2025</div>
+      <div class="desc">Prompt Engineering | Recorded Lectures</div>
+      <div class="details">Flexible 3-5 hrs/week | 2 Certificates</div>
+      <div class="price">₹499 <del>₹999</del> <span class="off">50.05% OFF</span></div>
+      <a href="https://web.classplusapp.com/store/course/506806?section=overview" class="button" target="_blank">Join Now</a>
+      <span class="likes">401 Likes</span>
+    </div>
+  </div>
+
+    <!-- Card 5 -->
+  <div class="card">
+    <div class="badge">LIVE COURSE</div>
+    <img src="5.png" alt="Java Tejas">
+    <div class="content">
+      <div class="title">Java Programming तेजस Batch 2025</div>
+      <div class="desc">Live + Recorded Lectures | Flexible 3–5 hrs/week</div>
+      <div class="details">2 Certificates | Free Study Material</div>
+      <div class="price">₹499 <del>₹999</del> <span class="off">50.05% OFF</span></div>
+      <a href="https://web.classplusapp.com/store/course/506804?section=overview" class="button" target="_blank">Register Now</a>
+      <span class="likes">285 Likes</span>
+    </div>
+  </div>
+
+
+</body>
+</html>
