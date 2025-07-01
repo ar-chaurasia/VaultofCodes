@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register - Vault of Codes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      padding: 36px 32px 30px 32px;
+      max-width: 500px;
+      width: 100%;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(80, 80, 180, 0.18), 0 1.5px 8px rgba(80, 80, 180, 0.10);
+      border: 1.5px solid #e3e8f0;
+      position: relative;
+      overflow: hidden;
+      animation: popIn 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.95) translateY(40px); opacity: 0; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+
+    .logo img {
+      width: 140px;
+      filter: drop-shadow(0 2px 8px #2575fc33);
+    }
+
+    h2 {
+      text-align: center;
+      color: #1f3b57;
+      margin-bottom: 25px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #2d3a4a;
+      letter-spacing: 0.2px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"],
+    input[type="tel"],
+    select {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1.5px solid #d1d9e6;
+      border-radius: 8px;
+      font-size: 15px;
+      background: #f7f9fa;
+      transition: border 0.2s, box-shadow 0.2s;
+      outline: none;
+      font-family: inherit;
+    }
+    input:focus {
+      border-color: #2575fc;
+      box-shadow: 0 0 0 2px #2575fc33;
+      background: #fff;
+    }
+
+    .gender-options {
+      display: flex;
+      gap: 18px;
+      margin-top: 5px;
+    }
+    .gender-options label {
+      font-weight: 500;
+      color: #444;
+    }
+
+    .checkbox-group {
+      margin-top: 10px;
+    }
+    .checkbox-group input {
+      margin-right: 8px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+      color: white;
+      padding: 13px;
+      font-size: 17px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 18px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px #2575fc33;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .submit-btn:disabled {
+      background: #b3c6e6;
+      cursor: not-allowed;
+      color: #fff;
+      opacity: 0.7;
+    }
+    .submit-btn:hover:not(:disabled) {
+      background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 4px 16px #2575fc33;
+    }
+
+    .error {
+      color: #e74c3c;
+      font-size: 13px;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .char-count {
+      font-size: 12px;
+      color: #888;
+      margin-top: 4px;
+      text-align: right;
+    }
+
+    .strength-meter {
+      font-size: 12px;
+      margin-top: 4px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    .form-group input[type="password"] {
+      padding-right: 38px;
+    }
+    .form-group button[type="button"] {
+      background: none;
+      border: none;
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      color: #2575fc;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .form-group button[type="button"]:hover {
+      opacity: 1;
+      color: #6a11cb;
+    }
+
+    #successMsg {
+      display: none;
+      text-align: center;
+      color: #1abc9c;
+      font-weight: bold;
+      font-size: 20px;
+      margin-top: 30px;
+      letter-spacing: 0.5px;
+      animation: fadeIn 0.7s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 18px 6px 18px 6px;
+        border-radius: 10px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="logo">
+      <img src="logo.webp" alt="Vault of Codes Logo">
+    </div>
+
+    <h2>Vault of Codes - Registration</h2>
+
+    <form id="registrationForm" onsubmit="return validateForm()">
+      
+      <div class="form-group">
+        <label for="fname">First Name</label>
+        <input type="text" id="fname" name="fname" maxlength="20" required oninput="updateCharCount('fname')">
+        <div class="char-count" id="fname-count">0/20</div>
+      </div>
+
+      <div class="form-group">
+        <label for="lname">Last Name</label>
+        <input type="text" id="lname" name="lname" maxlength="20" required oninput="updateCharCount('lname')">
+        <div class="char-count" id="lname-count">0/20</div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div style="position:relative;">
+          <input type="password" id="password" name="password" required oninput="checkStrength()">
+          <button type="button" onclick="togglePassword('password')" style="position:absolute;right:10px;top:8px;">👁️</button>
+        </div>
+        <div class="strength-meter" id="strength-meter"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <div style="position:relative;">
+          <input type="password" id="confirmPassword" name="confirmPassword" required>
+          <button type="button" onclick="togglePassword('confirmPassword')" style="position:absolute;right:10px;top:8px;">👁️</button>
+        </div>
+        <div id="passwordError" class="error"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" name="dob" required>
+      </div>
+
+      <div class="form-group">
+        <label>Gender</label>
+        <div class="gender-options">
+          <label><input type="radio" name="gender" value="Male" required> Male</label>
+          <label><input type="radio" name="gender" value="Female"> Female</label>
+          <label><input type="radio" name="gender" value="Other"> Other</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="mobile">Mobile Number</label>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <input type="tel" id="mobile" name="mobile" maxlength="10" pattern="[0-9]{10}" required style="flex:1;" oninput="resetOtp()">
+          <button type="button" class="submit-btn" style="width:auto;padding:8px 16px;font-size:14px;min-width:90px;" onclick="sendOtp()" id="sendOtpBtn">Send OTP</button>
+        </div>
+        <div class="char-count" id="mobile-error"></div>
+      </div>
+
+      <div class="form-group" id="otpSection" style="display:none;">
+        <label for="otp">Enter OTP</label>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <input type="text" id="otp" maxlength="6" style="flex:1;" autocomplete="off">
+          <button type="button" class="submit-btn" style="width:auto;padding:8px 16px;font-size:14px;min-width:90px;" onclick="verifyOtp()" id="verifyOtpBtn">Verify OTP</button>
+        </div>
+        <div class="char-count" id="otp-info"></div>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="terms" required>
+        <label for="terms">I agree to the Terms and Conditions</label>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn" disabled>Register</button>
+
+    </form>
+  </div>
+
+  <script>
+    function updateCharCount(field) {
+      const input = document.getElementById(field);
+      const count = document.getElementById(field + '-count');
+      count.textContent = input.value.length + '/20';
+      checkFormValidity();
+    }
+
+    function checkStrength() {
+      const password = document.getElementById("password").value;
+      const meter = document.getElementById("strength-meter");
+      let strength = 0;
+      if (password.length >= 8) strength++;
+      if (/[A-Z]/.test(password)) strength++;
+      if (/[0-9]/.test(password)) strength++;
+      if (/[^A-Za-z0-9]/.test(password)) strength++;
+      const levels = ["Weak", "Medium", "Strong", "Very Strong"];
+      meter.textContent = password ? levels[strength-1] || "Very Weak" : "";
+      meter.style.color = ["red","orange","#007bff","green"][strength-1] || "gray";
+      checkFormValidity();
+    }
+
+    function togglePassword(id) {
+      const input = document.getElementById(id);
+      input.type = input.type === "password" ? "text" : "password";
+    }
+
+    function validateForm() {
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const errorBox = document.getElementById("passwordError");
+      if (password !== confirmPassword) {
+        errorBox.textContent = "Passwords do not match.";
+        return false;
+      }
+      errorBox.textContent = "";
+      document.getElementById("successMsg").style.display = "block";
+      document.getElementById("registrationForm").style.display = "none";
+      return false;
+    }
+
+    let generatedOtp = '';
+    let otpVerified = false;
+
+    function sendOtp() {
+      const mobile = document.getElementById('mobile').value.trim();
+      const error = document.getElementById('mobile-error');
+      if (!/^\d{10}$/.test(mobile)) {
+        error.textContent = 'Enter a valid 10-digit mobile number.';
+        return;
+      }
+      error.textContent = '';
+      generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+      document.getElementById('otpSection').style.display = 'block';
+      document.getElementById('otp-info').textContent = `Demo OTP: ${generatedOtp}`;
+      document.getElementById('verifyOtpBtn').disabled = false;
+      otpVerified = false;
+      checkFormValidity();
+    }
+
+    function verifyOtp() {
+      const otp = document.getElementById('otp').value.trim();
+      const info = document.getElementById('otp-info');
+      if (otp === generatedOtp) {
+        info.textContent = 'OTP verified!';
+        info.style.color = 'green';
+        otpVerified = true;
+        document.getElementById('verifyOtpBtn').disabled = true;
+      } else {
+        info.textContent = 'Incorrect OTP. Try again.';
+        info.style.color = 'red';
+        otpVerified = false;
+      }
+      checkFormValidity();
+    }
+
+    function resetOtp() {
+      document.getElementById('otpSection').style.display = 'none';
+      document.getElementById('otp-info').textContent = '';
+      otpVerified = false;
+      checkFormValidity();
+    }
+
+    function checkFormValidity() {
+      const fname = document.getElementById('fname').value.trim();
+      const lname = document.getElementById('lname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const dob = document.getElementById('dob').value;
+      const gender = document.querySelector('input[name="gender"]:checked');
+      const terms = document.getElementById('terms').checked;
+      const mobile = document.getElementById('mobile').value.trim();
+      const allFilled = fname && lname && email && password && confirmPassword && dob && gender && terms && mobile;
+      const passwordsMatch = password === confirmPassword;
+      const mobileValid = /^\d{10}$/.test(mobile);
+      document.getElementById('submitBtn').disabled = !(allFilled && passwordsMatch && mobileValid && otpVerified);
+    }
+    document.querySelectorAll('input,select').forEach(el => {
+      el.addEventListener('input', checkFormValidity);
+      el.addEventListener('change', checkFormValidity);
+    });
+  </script>
+  <div id="successMsg" style="display:none;text-align:center;color:green;font-weight:bold;font-size:18px;">Registration successful!</div>
+
+</body>
+</html>
