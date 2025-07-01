@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Snake Xenzia Game - Vault of Codes (Final Project)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Montserrat', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .game-container {
+      background: #fff;
+      padding: 36px 32px 30px 32px;
+      max-width: 420px;
+      width: 100%;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(80, 80, 180, 0.18), 0 1.5px 8px rgba(80, 80, 180, 0.10);
+      border: 1.5px solid #e3e8f0;
+      position: relative;
+      overflow: hidden;
+      animation: popIn 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.95) translateY(40px); opacity: 0; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    h2 {
+      text-align: center;
+      color: #1f3b57;
+      margin-bottom: 18px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .score {
+      font-size: 1.1rem;
+      color: #1f3b57;
+      margin-bottom: 10px;
+      min-height: 28px;
+      text-align: center;
+    }
+    canvas {
+      background: #f7f9fa;
+      border-radius: 10px;
+      box-shadow: 0 1px 4px #2575fc11;
+      border: 2px solid #d1d9e6;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .reset-btn {
+      background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+      color: white;
+      padding: 10px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px #2575fc33;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 10px;
+    }
+    .reset-btn:hover {
+      background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 4px 16px #2575fc33;
+    }
+    .instructions {
+      color: #444;
+      font-size: 0.98rem;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    @media (max-width: 600px) {
+      .game-container {
+        padding: 18px 6px 18px 6px;
+        border-radius: 10px;
+      }
+      canvas {
+        width: 90vw !important;
+        height: 90vw !important;
+        max-width: 320px !important;
+        max-height: 320px !important;
+      }
+      h2 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <h2>Snake Xenzia Game</h2>
+    <div class="score" id="score">Score: 0</div>
+    <div class="instructions">Use arrow keys (or swipe on mobile) to move the snake.<br>Eat food to grow. Don't hit the wall or yourself!</div>
+    <canvas id="gameCanvas" width="320" height="320"></canvas>
+    <button class="reset-btn" onclick="resetGame()">Restart Game</button>
+  </div>
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const box = 20;
+    const rows = 16;
+    const cols = 16;
+    let snake, direction, food, score, gameInterval, gameActive;
+    function initGame() {
+      snake = [{x: 8, y: 8}];
+      direction = 'RIGHT';
+      food = randomFood();
+      score = 0;
+      gameActive = true;
+      document.getElementById('score').textContent = 'Score: ' + score;
+      clearInterval(gameInterval);
+      gameInterval = setInterval(draw, 200); // Increased interval for slower speed
+    }
+    function randomFood() {
+      let newFood;
+      while (true) {
+        newFood = {
+          x: Math.floor(Math.random() * cols),
+          y: Math.floor(Math.random() * rows)
+        };
+        if (!snake.some(s => s.x === newFood.x && s.y === newFood.y)) break;
+      }
+      return newFood;
+    }
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Draw snake
+      for (let i = 0; i < snake.length; i++) {
+        ctx.fillStyle = i === 0 ? '#2575fc' : '#6a11cb';
+        ctx.fillRect(snake[i].x * box, snake[i].y * box, box, box);
+        ctx.strokeStyle = '#fff';
+        ctx.strokeRect(snake[i].x * box, snake[i].y * box, box, box);
+      }
+      // Draw food
+      ctx.fillStyle = '#1abc9c';
+      ctx.fillRect(food.x * box, food.y * box, box, box);
+      // Move snake
+      let head = {x: snake[0].x, y: snake[0].y};
+      if (direction === 'LEFT') head.x--;
+      if (direction === 'RIGHT') head.x++;
+      if (direction === 'UP') head.y--;
+      if (direction === 'DOWN') head.y++;
+      // Game over conditions
+      if (
+        head.x < 0 || head.x >= cols ||
+        head.y < 0 || head.y >= rows ||
+        snake.some(s => s.x === head.x && s.y === head.y)
+      ) {
+        gameOver();
+        return;
+      }
+      snake.unshift(head);
+      // Eat food
+      if (head.x === food.x && head.y === food.y) {
+        score++;
+        document.getElementById('score').textContent = 'Score: ' + score;
+        food = randomFood();
+      } else {
+        snake.pop();
+      }
+      // Draw again
+    }
+    function gameOver() {
+      clearInterval(gameInterval);
+      gameActive = false;
+      ctx.fillStyle = 'rgba(0,0,0,0.7)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 28px Montserrat, Segoe UI, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Game Over!', canvas.width/2, canvas.height/2-10);
+      ctx.font = '18px Montserrat, Segoe UI, sans-serif';
+      ctx.fillText('Score: ' + score, canvas.width/2, canvas.height/2+22);
+    }
+    function resetGame() {
+      initGame();
+    }
+    document.addEventListener('keydown', function(e) {
+      if (!gameActive) return;
+      if (e.key === 'ArrowLeft' && direction !== 'RIGHT') direction = 'LEFT';
+      else if (e.key === 'ArrowUp' && direction !== 'DOWN') direction = 'UP';
+      else if (e.key === 'ArrowRight' && direction !== 'LEFT') direction = 'RIGHT';
+      else if (e.key === 'ArrowDown' && direction !== 'UP') direction = 'DOWN';
+    });
+    // Touch controls for mobile
+    let touchStartX = 0, touchStartY = 0;
+    canvas.addEventListener('touchstart', function(e) {
+      const t = e.touches[0];
+      touchStartX = t.clientX;
+      touchStartY = t.clientY;
+    });
+    canvas.addEventListener('touchmove', function(e) {
+      if (!gameActive) return;
+      const t = e.touches[0];
+      const dx = t.clientX - touchStartX;
+      const dy = t.clientY - touchStartY;
+      if (Math.abs(dx) > Math.abs(dy)) {
+        if (dx > 20 && direction !== 'LEFT') direction = 'RIGHT';
+        else if (dx < -20 && direction !== 'RIGHT') direction = 'LEFT';
+      } else {
+        if (dy > 20 && direction !== 'UP') direction = 'DOWN';
+        else if (dy < -20 && direction !== 'DOWN') direction = 'UP';
+      }
+      touchStartX = t.clientX;
+      touchStartY = t.clientY;
+    });
+    // Start game
+    initGame();
+  </script>
+</body>
+</html>
